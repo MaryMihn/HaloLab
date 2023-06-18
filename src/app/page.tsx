@@ -15,41 +15,7 @@ import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
 import { Controller, useForm, useController } from "react-hook-form";
 import styles from "./page.module.css";
-
-interface City {
-  id: number;
-  name: string;
-}
-
-interface DoctorSpecialty {
-  id: number;
-  name: string;
-  params?: {
-    minAge?: number;
-    maxAge?: number;
-    gender?: string;
-  };
-}
-
-interface Doctor {
-  id: number;
-  name: string;
-  surname: string;
-  specialityId: number;
-  isPediatrician: boolean;
-  cityId: number;
-}
-
-interface Form {
-  name: string;
-  birthdayDate?: string;
-  sex: string;
-  city: City;
-  doctorSpecialty?: DoctorSpecialty;
-  doctor: Doctor;
-  email: string;
-  phone?: string;
-}
+import  {City , DoctorSpecialty , Doctor , Form}  from "./types/insex"
 
 export default function Home(props: any) {
   const { Component, pageProps } = props;
@@ -218,8 +184,6 @@ export default function Home(props: any) {
     data.preventDefault();
     console.log(data, "!!!!!");
   };
-
-  console.log(watch(), "!123!!!");
 
   return (
     <div className={styles.app}>
