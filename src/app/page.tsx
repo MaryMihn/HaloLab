@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { Controller, useForm, useController } from "react-hook-form";
 import styles from "./page.module.css";
 import  {City , DoctorSpecialty , Doctor , Form}  from "./types/insex"
@@ -29,9 +29,9 @@ export default function Home(props: any) {
   const [doctorSpecialtiesTrue, setDoctorSpecialtiesTrue] = useState<
     DoctorSpecialty[]
   >([]);
-  const [selectedDoctor, setSelectedDoctor] = useState<number | "">("");
-  const [selectedCity, setSelectedCity] = useState<number | "">("");
-  const [selectedSpeciality, setSelectedSpeciality] = useState<number | "">("");
+  const [selectedDoctor, setSelectedDoctor] = useState<number | string>("");
+  const [selectedCity, setSelectedCity] = useState<number | string>("");
+  const [selectedSpeciality, setSelectedSpeciality] = useState<number | string>("");
 
   const {
     handleSubmit,
@@ -46,6 +46,8 @@ export default function Home(props: any) {
   const city = watch("city");
   const doctorSpecialty = watch("doctorSpecialty");
   const birth = watch("birthdayDate");
+
+
 
   useEffect(() => {
     const dataFetch = async () => {
@@ -118,9 +120,10 @@ export default function Home(props: any) {
   }, [birth]);
 
   useEffect(() => {
+    console.log(typeof city, "city")
     const doctorsCity = doctorSpecialty
-      ? doctors.filter((el) => el?.cityId == city?.id)
-      : doctorsTrue.filter((el) => el?.cityId == city?.id);
+      ? doctors.filter((el) => el?.cityId == city.id)
+      : doctorsTrue.filter((el) => el?.cityId == city.id);
     setDoctors(doctorsCity ?? []);
   }, [city]);
 
@@ -131,7 +134,7 @@ export default function Home(props: any) {
     setDoctors(doctorInSpecialty ?? []);
   }, [doctorSpecialty]);
 
-  const handleCityChange = (event: React.ChangeEvent<{ value: number }>) => {
+  const handleCityChange = (event: { target: { value: SetStateAction<string | number>; }; }) => {
     const selectedCity = cities.find(
       (el) => el?.id === event.target.value
     ) as City;
@@ -140,7 +143,7 @@ export default function Home(props: any) {
   };
 
   const handleSpecialityChange = (
-    event: React.ChangeEvent<{ value: number }>
+    event: { target: { value: SetStateAction<string | number>; }; }
   ) => {
     const selectedSpeciality = event.target.value as number;
     const doctorSpec = doctorSpecialties.find(
@@ -150,7 +153,7 @@ export default function Home(props: any) {
     setValue("doctorSpecialty", doctorSpec);
   };
 
-  const handleDoctorChange = (event: React.ChangeEvent<{ value: number }>) => {
+  const handleDoctorChange = (event: { target: { value: SetStateAction<string | number>; }; }) => {
     const doctor = doctors.find(
       (el) => el?.id === event.target.value
     ) as Doctor;
