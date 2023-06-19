@@ -120,7 +120,6 @@ export default function Home(props: any) {
   }, [birth]);
 
   useEffect(() => {
-    console.log(typeof city, "city")
     const doctorsCity = doctorSpecialty
       ? doctors.filter((el) => el?.cityId == city.id)
       : doctorsTrue.filter((el) => el?.cityId == city.id);
