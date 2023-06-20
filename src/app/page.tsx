@@ -121,16 +121,15 @@ export default function Home(props: any) {
 
   useEffect(() => {
     const doctorsCity =
-      doctorSpecialty && !selectedCity
+      doctorSpecialty
         ? doctors.filter((el) => el?.cityId == city.id)
         : doctorsTrue.filter((el) => el?.cityId == city.id);
     setDoctors(doctorsCity ?? []);
   }, [city]);
 
 
-
   useEffect(() => {
-    const doctorInSpecialty: Doctor[] = city && !selectedDoctor
+    const doctorInSpecialty: Doctor[] = city
       ? doctors.filter((el) => el?.specialityId === doctorSpecialty?.id)
       : doctorsTrue.filter((el) => el?.specialityId === doctorSpecialty?.id);
     setDoctors( doctorInSpecialty ?? [])
