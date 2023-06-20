@@ -15,7 +15,7 @@ import TextField from "@mui/material/TextField";
 import { useState, useEffect, SetStateAction } from "react";
 import { Controller, useForm, useController } from "react-hook-form";
 import styles from "./page.module.css";
-import  {City , DoctorSpecialty , Doctor , Form}  from "./types/insex"
+import { City, DoctorSpecialty, Doctor, Form } from "./types/insex";
 
 export default function Home(props: any) {
   const { Component, pageProps } = props;
@@ -31,7 +31,9 @@ export default function Home(props: any) {
   >([]);
   const [selectedDoctor, setSelectedDoctor] = useState<number | string>("");
   const [selectedCity, setSelectedCity] = useState<number | string>("");
-  const [selectedSpeciality, setSelectedSpeciality] = useState<number | string>("");
+  const [selectedSpeciality, setSelectedSpeciality] = useState<number | string>(
+    ""
+  );
 
   const {
     handleSubmit,
@@ -46,8 +48,6 @@ export default function Home(props: any) {
   const city = watch("city");
   const doctorSpecialty = watch("doctorSpecialty");
   const birth = watch("birthdayDate");
-
-
 
   useEffect(() => {
     const dataFetch = async () => {
@@ -120,24 +120,26 @@ export default function Home(props: any) {
   }, [birth]);
 
   useEffect(() => {
-    const doctorsCity = doctorSpecialty && !selectedCity
-      ? doctors.filter((el) => el?.cityId == city.id)
-      : doctorsTrue.filter((el) => el?.cityId == city.id);
+    const doctorsCity =
+      doctorSpecialty && !selectedCity
+        ? doctors.filter((el) => el?.cityId == city.id)
+        : doctorsTrue.filter((el) => el?.cityId == city.id);
     setDoctors(doctorsCity ?? []);
   }, [city]);
+
+
 
   useEffect(() => {
     const doctorInSpecialty: Doctor[] = city && !selectedDoctor
       ? doctors.filter((el) => el?.specialityId === doctorSpecialty?.id)
       : doctorsTrue.filter((el) => el?.specialityId === doctorSpecialty?.id);
-    setDoctors((prevCount) => {
-      console.log(prevCount, "prevCount") 
-      return doctorInSpecialty ?? []
-    }
-      );
+    setDoctors( doctorInSpecialty ?? [])
   }, [doctorSpecialty]);
 
-  const handleCityChange = (event: { target: { value: SetStateAction<string | number>; }; }) => {
+
+  const handleCityChange = (event: {
+    target: { value: SetStateAction<string | number> };
+  }) => {
     const selectedCity = cities.find(
       (el) => el?.id === event.target.value
     ) as City;
@@ -145,9 +147,9 @@ export default function Home(props: any) {
     setValue("city", selectedCity);
   };
 
-  const handleSpecialityChange = (
-    event: { target: { value: SetStateAction<string | number>; }; }
-  ) => {
+  const handleSpecialityChange = (event: {
+    target: { value: SetStateAction<string | number> };
+  }) => {
     const selectedSpeciality = event.target.value as number;
     const doctorSpec = doctorSpecialties.find(
       (el) => el?.id === event.target.value
@@ -156,7 +158,9 @@ export default function Home(props: any) {
     setValue("doctorSpecialty", doctorSpec);
   };
 
-  const handleDoctorChange = (event: { target: { value: SetStateAction<string | number>; }; }) => {
+  const handleDoctorChange = (event: {
+    target: { value: SetStateAction<string | number> };
+  }) => {
     const doctor = doctors.find(
       (el) => el?.id === event.target.value
     ) as Doctor;
