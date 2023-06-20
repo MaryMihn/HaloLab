@@ -119,21 +119,16 @@ export default function Home(props: any) {
     setDoctorSpecialties(res);
   }, [birth]);
 
-  useEffect(() => {
-    const doctorsCity =
-      doctorSpecialty
-        ? doctors.filter((el) => el?.cityId == city.id)
-        : doctorsTrue.filter((el) => el?.cityId == city.id);
-    setDoctors(doctorsCity ?? []);
-  }, [city]);
-
 
   useEffect(() => {
-    const doctorInSpecialty: Doctor[] = city
-      ? doctors.filter((el) => el?.specialityId === doctorSpecialty?.id)
-      : doctorsTrue.filter((el) => el?.specialityId === doctorSpecialty?.id);
-    setDoctors( doctorInSpecialty ?? [])
-  }, [doctorSpecialty]);
+    const doctorInSpecialty: Doctor[] = doctorsTrue
+      .filter((el) => el?.specialityId === doctorSpecialty?.id)
+.filter((el) => {
+        return el?.cityId == city.id
+      });
+
+    setDoctors(doctorInSpecialty ?? []);
+  }, [doctorSpecialty, city]);
 
 
   const handleCityChange = (event: {
