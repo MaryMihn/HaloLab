@@ -120,17 +120,21 @@ export default function Home(props: any) {
   }, [birth]);
 
   useEffect(() => {
-    const doctorsCity = doctorSpecialty
+    const doctorsCity = doctorSpecialty && !selectedCity
       ? doctors.filter((el) => el?.cityId == city.id)
       : doctorsTrue.filter((el) => el?.cityId == city.id);
     setDoctors(doctorsCity ?? []);
   }, [city]);
 
   useEffect(() => {
-    const doctorInSpecialty: Doctor[] = city
+    const doctorInSpecialty: Doctor[] = city && !selectedDoctor
       ? doctors.filter((el) => el?.specialityId === doctorSpecialty?.id)
       : doctorsTrue.filter((el) => el?.specialityId === doctorSpecialty?.id);
-    setDoctors(doctorInSpecialty ?? []);
+    setDoctors((prevCount) => {
+      console.log(prevCount, "prevCount") 
+      return doctorInSpecialty ?? []
+    }
+      );
   }, [doctorSpecialty]);
 
   const handleCityChange = (event: { target: { value: SetStateAction<string | number>; }; }) => {
